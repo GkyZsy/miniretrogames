@@ -1,1 +1,9 @@
+body {
+  background: #070914;
+  color: white;
+  font-family: system-ui;
+}
 
+h1 {
+  color: #b026ff;
+}
