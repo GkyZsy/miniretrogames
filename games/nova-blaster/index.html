@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nova Blaster</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="shell">
+    <header>
+      <div>
+        <h1>Nova Blaster</h1>
+        <p class="tag">A Mega Man-inspired 2D action platformer built with vanilla JavaScript.</p>
+      </div>
+      <div class="hud-card">
+        <div><span>Move</span><strong>A/D or ←/→</strong></div>
+        <div><span>Jump</span><strong>W / ↑ / Space</strong></div>
+        <div><span>Shoot</span><strong>J / X</strong></div>
+        <div><span>Dash</span><strong>K / C</strong></div>
+        <div><span>Pause</span><strong>P</strong></div>
+      </div>
+    </header>
+
+    <main>
+      <canvas id="game" width="960" height="540" aria-label="Nova Blaster game canvas"></canvas>
+      <aside class="panel">
+        <section>
+          <h2>Goal</h2>
+          <p>Defeat drones, collect energy cores, and reach the gate in each stage.</p>
+        </section>
+        <section>
+          <h2>Tips</h2>
+          <ul>
+            <li>Blaster shots can destroy patrol drones.</li>
+            <li>Dash to cross longer gaps safely.</li>
+            <li>Collect blue cores to heal.</li>
+          </ul>
+        </section>
+        <section>
+          <h2>Stage Flow</h2>
+          <p>Three compact levels, boss fight in the final arena, best score saved locally.</p>
+        </section>
+      </aside>
+    </main>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

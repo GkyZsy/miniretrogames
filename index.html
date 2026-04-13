@@ -1,109 +1,179 @@
-<!doctype html>
-<html lang="tr">
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>MiniRetroGames — Retro • Medieval • Arcade</title>
-  <link rel="stylesheet" href="styles/site.css" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MiniRetroGames</title>
+  <meta name="description" content="A polished collection of small browser games built with vanilla JavaScript." />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=MedievalSharp&display=swap" rel="stylesheet">
-
-  <link rel="stylesheet" href="styles/site.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <header class="top">
-    <div class="brand">
-      <div class="logo" aria-hidden="true">MRG</div>
-      <div class="brandText">
-        <h1>MiniRetroGames</h1>
-        <p class="tagline">Retro • Medieval • Arcade</p>
-      </div>
-    </div>
+  <div class="bg-orb orb-left"></div>
+  <div class="bg-orb orb-right"></div>
 
-    <nav class="nav">
-      <a href="index.html" class="active">Arcade</a>
-      <a href="about.html">About</a>
+  <header class="site-header">
+    <a class="brand" href="#" aria-label="MiniRetroGames home">
+      <div class="brand-mark">MRG</div>
+      <div>
+        <div class="brand-title">MiniRetroGames</div>
+        <div class="brand-subtitle">Retro • Medieval • Arcade</div>
+      </div>
+    </a>
+
+    <nav class="top-nav" aria-label="Primary navigation">
+      <button class="nav-pill active" data-panel="arcade">Arcade</button>
+      <button class="nav-pill" data-panel="about">About</button>
     </nav>
   </header>
 
-  <main class="wrap">
-    <section class="gridHead">
-      <h2>Games</h2>
-      <p class="sub">6 slot — yeni oyunlar geldikçe dolacak.</p>
+  <main class="shell">
+    <section id="arcade" class="panel active" aria-label="Arcade games">
+      <div class="grid">
+        <article class="game-card featured">
+          <div class="card-art art-nova">
+            <div class="art-title">Nova Blaster</div>
+          </div>
+          <div class="card-body">
+            <div class="tags">
+              <span>Action</span>
+              <span>Platformer</span>
+              <span>Boss</span>
+            </div>
+            <h2>Nova Blaster — v1.0</h2>
+            <p>Mega Man-inspired action platformer with three stages, enemy patterns, dash movement, and a final boss.</p>
+            <div class="card-actions">
+              <a class="play-btn" href="games/nova-blaster/index.html" target="_blank" rel="noopener">Play</a>
+              <span class="card-note">Best on desktop</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="game-card">
+          <div class="card-art art-flappy">
+            <div class="art-title">Flappy Birb</div>
+          </div>
+          <div class="card-body">
+            <div class="tags">
+              <span>Retro</span>
+              <span>Arcade</span>
+            </div>
+            <h2>Flappy Birb</h2>
+            <p>Simple one-button flying challenge with crisp timing and score chasing.</p>
+            <div class="card-actions">
+              <a class="play-btn" href="games/flappy-birb/index.html" target="_blank" rel="noopener">Play</a>
+              <span class="card-note">Quick sessions</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="game-card">
+          <div class="card-art art-star">
+            <div class="art-title">Star Blaster</div>
+          </div>
+          <div class="card-body">
+            <div class="tags">
+              <span>Shooter</span>
+              <span>Arcade</span>
+            </div>
+            <h2>Star Blaster</h2>
+            <p>Mini space shooter with waves of enemies, score climbing, and fast controls.</p>
+            <div class="card-actions">
+              <a class="play-btn" href="games/star-blaster/index.html" target="_blank" rel="noopener">Play</a>
+              <span class="card-note">Keyboard friendly</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="game-card">
+          <div class="card-art art-brick">
+            <div class="art-title">Brick Breaker</div>
+          </div>
+          <div class="card-body">
+            <div class="tags">
+              <span>Classic</span>
+              <span>Arcade</span>
+            </div>
+            <h2>Brick Breaker</h2>
+            <p>Break the wall, control the paddle, and survive long enough to clear the board.</p>
+            <div class="card-actions">
+              <a class="play-btn" href="games/brick-breaker/index.html" target="_blank" rel="noopener">Play</a>
+              <span class="card-note">Desktop or laptop</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="game-card">
+          <div class="card-art art-snake">
+            <div class="art-title">Tiny Snake</div>
+          </div>
+          <div class="card-body">
+            <div class="tags">
+              <span>Retro</span>
+              <span>Grid</span>
+            </div>
+            <h2>Tiny Snake</h2>
+            <p>Old-school snake gameplay with a clean presentation and best-score replay value.</p>
+            <div class="card-actions">
+              <a class="play-btn" href="games/tiny-snake/index.html" target="_blank" rel="noopener">Play</a>
+              <span class="card-note">Low friction</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="game-card">
+          <div class="card-art art-runner">
+            <div class="art-title">Dash Runner</div>
+          </div>
+          <div class="card-body">
+            <div class="tags">
+              <span>Runner</span>
+              <span>Arcade</span>
+            </div>
+            <h2>Dash Runner</h2>
+            <p>Endless reflex runner with jump timing, increasing speed, and retro energy.</p>
+            <div class="card-actions">
+              <a class="play-btn" href="games/dash-runner/index.html" target="_blank" rel="noopener">Play</a>
+              <span class="card-note">High tempo</span>
+            </div>
+          </div>
+        </article>
+      </div>
     </section>
 
-    <section class="grid" aria-label="Game list">
-      <article class="card">
-        <div class="thumb"><span class="thumbText">Slash & Dash</span></div>
-        <div class="cardBody">
-          <div class="meta">
-            <span class="chip">Arcade</span>
-            <span class="chip">Slash</span>
-            <span class="chip">Dash</span>
+    <section id="about" class="panel" aria-label="About MiniRetroGames">
+      <div class="about-card">
+        <h1>About this collection</h1>
+        <p>
+          MiniRetroGames is a small browser arcade shelf built around short, replayable games.
+          The collection mixes action, platforming, and classic retro ideas, with each project kept lightweight and easy to launch in a browser.
+        </p>
+        <div class="about-grid">
+          <div>
+            <h3>What is inside?</h3>
+            <ul>
+              <li>6 playable browser games</li>
+              <li>Vanilla JavaScript, HTML, and CSS</li>
+              <li>GitHub Pages friendly structure</li>
+              <li>Fast-loading standalone game folders</li>
+            </ul>
           </div>
-          <h3>Slash & Dash — v0.1</h3>
-          <p>Hızlı dash + yakın dövüş. Kısa session, yüksek tempo.</p>
-          <div class="actions">
-            <a class="btn primary" href="games/slash-dash-01/index.html">Play</a>
-            <span class="hint">Best on desktop</span>
+          <div>
+            <h3>Recommended flow</h3>
+            <ul>
+              <li>Start with Nova Blaster</li>
+              <li>Use the other 5 games as quick arcade picks</li>
+              <li>Add thumbnails later for each card</li>
+              <li>Expand the grid as you publish more games</li>
+            </ul>
           </div>
         </div>
-      </article>
-
-      <article class="card disabled" aria-disabled="true">
-        <div class="thumb"><span class="thumbText">Coming Soon</span></div>
-        <div class="cardBody">
-          <div class="meta"><span class="chip">Medieval</span><span class="chip">Arcade</span></div>
-          <h3>Slot #2</h3><p>Yeni oyun yakında.</p>
-          <div class="actions"><button class="btn" disabled>Coming Soon</button></div>
-        </div>
-      </article>
-
-      <article class="card disabled" aria-disabled="true">
-        <div class="thumb"><span class="thumbText">Coming Soon</span></div>
-        <div class="cardBody">
-          <div class="meta"><span class="chip">Retro</span><span class="chip">Arcade</span></div>
-          <h3>Slot #3</h3><p>Yeni oyun yakında.</p>
-          <div class="actions"><button class="btn" disabled>Coming Soon</button></div>
-        </div>
-      </article>
-
-      <article class="card disabled" aria-disabled="true">
-        <div class="thumb"><span class="thumbText">Coming Soon</span></div>
-        <div class="cardBody">
-          <div class="meta"><span class="chip">Action</span><span class="chip">Arcade</span></div>
-          <h3>Slot #4</h3><p>Yeni oyun yakında.</p>
-          <div class="actions"><button class="btn" disabled>Coming Soon</button></div>
-        </div>
-      </article>
-
-      <article class="card disabled" aria-disabled="true">
-        <div class="thumb"><span class="thumbText">Coming Soon</span></div>
-        <div class="cardBody">
-          <div class="meta"><span class="chip">Arena</span><span class="chip">Mini</span></div>
-          <h3>Slot #5</h3><p>Yeni oyun yakında.</p>
-          <div class="actions"><button class="btn" disabled>Coming Soon</button></div>
-        </div>
-      </article>
-
-      <article class="card disabled" aria-disabled="true">
-        <div class="thumb"><span class="thumbText">Coming Soon</span></div>
-        <div class="cardBody">
-          <div class="meta"><span class="chip">Boss</span><span class="chip">Rush</span></div>
-          <h3>Slot #6</h3><p>Yeni oyun yakında.</p>
-          <div class="actions"><button class="btn" disabled>Coming Soon</button></div>
-        </div>
-      </article>
+      </div>
     </section>
-
-    <footer class="footer">
-      <p>© <span id="y"></span> MiniRetroGames</p>
-    </footer>
   </main>
 
-  <script>
-    document.getElementById('y').textContent = new Date().getFullYear();
-  </script>
+  <script src="script.js"></script>
 </body>
 </html>
