@@ -11,9 +11,16 @@
   box-sizing: border-box;
 }
 
+html,
 body {
   margin: 0;
-  min-height: 100vh;
+  width: 100%;
+  min-height: 100%;
+  overflow-x: hidden;
+}
+
+body {
+  min-height: 100dvh;
   font-family: Inter, Arial, Helvetica, sans-serif;
   color: var(--text);
   background:
@@ -24,7 +31,8 @@ body {
 .shell {
   max-width: 1380px;
   margin: 0 auto;
-  padding: 24px;
+  padding: 16px;
+  min-height: 100dvh;
 }
 
 header {
@@ -32,7 +40,7 @@ header {
   gap: 20px;
   justify-content: space-between;
   align-items: flex-start;
-  margin-bottom: 18px;
+  margin-bottom: 14px;
 }
 
 h1 {
@@ -65,7 +73,9 @@ canvas,
 canvas {
   width: 100%;
   height: auto;
+  max-height: calc(100dvh - 170px);
   display: block;
+  aspect-ratio: 16 / 9;
 }
 
 .panel,
@@ -116,18 +126,32 @@ canvas {
   main {
     grid-template-columns: 1fr;
   }
+
+  canvas {
+    max-height: calc(100dvh - 230px);
+  }
 }
 
 @media (max-width: 760px) {
   .shell {
-    padding: 14px;
+    padding: 10px;
   }
 
   header {
     flex-direction: column;
+    gap: 12px;
   }
 
   .hud-card {
     width: 100%;
+  }
+
+  .panel,
+  .hud-card {
+    padding: 14px;
+  }
+
+  canvas {
+    max-height: calc(100dvh - 260px);
   }
 }

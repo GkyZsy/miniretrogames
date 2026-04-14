@@ -3,7 +3,12 @@ const ctx = canvas.getContext('2d');
 
 const WIDTH = canvas.width;
 const HEIGHT = canvas.height;
-const GRAVITY = 0.55;
+const GRAVITY = 0.42;
+const FALL_GRAVITY = 0.5;
+const JUMP_VELOCITY = -12.8;
+const COYOTE_TIME = 8;
+const JUMP_BUFFER = 8;
+
 const keys = new Set();
 const bestScoreKey = 'nova-blaster-best-score';
 
@@ -131,6 +136,8 @@ function makePlayer(start) {
     dashCooldown: 0,
     dashTimer: 0,
     invuln: 0,
+    coyoteTimer: 0,
+    jumpBufferTimer: 0,
   };
 }
 
@@ -219,8 +226,8 @@ function emitParticles(x, y, count, color) {
     game.stage.particles.push({
       x,
       y,
-      vx: (Math.random() - 0.5) * 6,
-      vy: (Math.random() - 0.5) * 6,
+      vx: (Math.random() - 0.5) * 5,
+      vy: (Math.random() - 0.5) * 5,
       life: 28 + Math.random() * 12,
       color,
       size: 2 + Math.random() * 3,
@@ -290,9 +297,15 @@ function updatePlayer() {
 
   const left = keys.has('a') || keys.has('arrowleft');
   const right = keys.has('d') || keys.has('arrowright');
-  const jump = keys.has('w') || keys.has('arrowup') || keys.has(' ');
+  const jumpHeld = keys.has('w') || keys.has('arrowup') || keys.has(' ');
   const shoot = keys.has('j') || keys.has('x');
   const dash = keys.has('k') || keys.has('c');
+
+  if (jumpHeld) {
+    player.jumpBufferTimer = JUMP_BUFFER;
+  } else {
+    player.jumpBufferTimer = Math.max(0, player.jumpBufferTimer - 1);
+  }
 
   const speed = player.dashTimer > 0 ? 6.8 : 3.2;
 
@@ -303,13 +316,21 @@ function updatePlayer() {
     player.vx = speed;
     player.facing = 1;
   } else {
-    player.vx *= player.grounded ? 0.76 : 0.93;
+    player.vx *= player.grounded ? 0.78 : 0.92;
     if (Math.abs(player.vx) < 0.05) player.vx = 0;
   }
 
-  if (jump && player.grounded) {
-    player.vy = -10.9;
+  if (player.grounded) {
+    player.coyoteTimer = COYOTE_TIME;
+  } else {
+    player.coyoteTimer = Math.max(0, player.coyoteTimer - 1);
+  }
+
+  if (player.jumpBufferTimer > 0 && player.coyoteTimer > 0) {
+    player.vy = JUMP_VELOCITY;
     player.grounded = false;
+    player.coyoteTimer = 0;
+    player.jumpBufferTimer = 0;
   }
 
   if (dash && player.dashCooldown <= 0) {
@@ -325,7 +346,17 @@ function updatePlayer() {
   player.dashTimer = Math.max(0, player.dashTimer - 1);
   player.invuln = Math.max(0, player.invuln - 1);
 
-  player.vy += GRAVITY;
+  const currentGravity = player.vy < 0 ? GRAVITY : FALL_GRAVITY;
+  player.vy += currentGravity;
+
+  if (!jumpHeld && player.vy < -4.5) {
+    player.vy += 0.22;
+  }
+
+  if (player.vy > 9.5) {
+    player.vy = 9.5;
+  }
+
   player.grounded = false;
   player.x += player.vx;
   solidCollision(player, game.stage.platforms, 'x');
@@ -338,12 +369,14 @@ function updatePlayer() {
     player.y = game.stage.start.y;
     player.vx = 0;
     player.vy = 0;
+    player.coyoteTimer = 0;
+    player.jumpBufferTimer = 0;
   }
 
   for (const hazard of game.stage.hazards) {
     if (rectsOverlap(player, hazard)) {
       damagePlayer(1);
-      player.vy = -6;
+      player.vy = -6.5;
       player.x -= player.facing * 18;
     }
   }
@@ -467,7 +500,7 @@ function updateEnemies() {
 
     if (rectsOverlap(player, enemy)) {
       damagePlayer(enemy.type === 'boss' ? 2 : 1);
-      player.vy = -5;
+      player.vy = -5.5;
       player.x += player.x < enemy.x ? -15 : 15;
     }
   }
@@ -568,20 +601,23 @@ function drawStage() {
 function drawPlayer() {
   if (player.invuln > 0 && Math.floor(player.invuln / 4) % 2 === 0) return;
   const x = player.x - game.cameraX;
+  const bob = !player.grounded ? Math.sin(performance.now() * 0.02) * 1.5 : 0;
+
   ctx.fillStyle = '#27a4ff';
-  ctx.fillRect(x + 6, player.y, 22, 18);
+  ctx.fillRect(x + 6, player.y + bob, 22, 18);
   ctx.fillStyle = '#89d8ff';
-  ctx.fillRect(x + 2, player.y + 16, 30, 24);
+  ctx.fillRect(x + 2, player.y + 16 + bob, 30, 24);
   ctx.fillStyle = '#ddf6ff';
-  ctx.fillRect(x + 9, player.y + 4, 10, 8);
+  ctx.fillRect(x + 9, player.y + 4 + bob, 10, 8);
   ctx.fillStyle = '#1b5f98';
-  ctx.fillRect(x + (player.facing > 0 ? 28 : -4), player.y + 22, 10, 8);
+  ctx.fillRect(x + (player.facing > 0 ? 28 : -4), player.y + 22 + bob, 10, 8);
   ctx.fillStyle = '#5bc5ff';
-  ctx.fillRect(x + 4, player.y + 40, 10, 12);
-  ctx.fillRect(x + 20, player.y + 40, 10, 12);
+  ctx.fillRect(x + 4, player.y + 40 + bob, 10, 12);
+  ctx.fillRect(x + 20, player.y + 40 + bob, 10, 12);
+
   if (player.dashTimer > 0) {
     ctx.fillStyle = 'rgba(108,209,255,0.28)';
-    ctx.fillRect(x - player.facing * 18, player.y + 10, 32, 28);
+    ctx.fillRect(x - player.facing * 18, player.y + 10 + bob, 32, 28);
   }
 }
 
@@ -624,6 +660,7 @@ function drawEnemies() {
       ctx.strokeStyle = '#ffd3e7';
       ctx.strokeRect(WIDTH - 260, 26, 220, 20);
       ctx.fillStyle = '#e7f3ff';
+      ctx.font = '16px Inter, Arial';
       ctx.fillText('CORE TITAN', WIDTH - 260, 20);
     }
   }

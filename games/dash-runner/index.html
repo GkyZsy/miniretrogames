@@ -1,2 +1,31 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>Dash Runner</title><link rel="stylesheet" href="style.css"></head>
-<body><div class="game-shell"><div class="topbar"><div class="title">Dash Runner</div><div class="hud"><div class="badge">Distance: <span id="score">0</span></div><div class="badge">Best: <span id="best">0</span></div><button id="restart">Restart</button></div></div><canvas id="game" width="720" height="360"></canvas><div class="help">Press <b>Space</b>, <b>W</b>, or <b>Arrow Up</b> to jump. Survive the endless obstacle track.</div></div><script src="script.js"></script></body></html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+  <title>Dash Runner</title>
+  <link rel="stylesheet" href="../../shared/game-shell.css" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="game-shell">
+    <div class="topbar">
+      <div class="title">Dash Runner</div>
+      <div class="hud">
+        <div class="badge">Score: <span id="score">0</span></div>
+        <div class="badge">Best: <span id="best">0</span></div>
+        <button id="restart">Restart</button>
+      </div>
+    </div>
+
+    <canvas id="game" width="640" height="360"></canvas>
+
+    <div class="help">
+      Jump over obstacles and survive as long as possible.
+      Use <b>Space</b>, <b>W</b>, or <b>Arrow Up</b> to jump.
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

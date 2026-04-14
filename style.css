@@ -1,8 +1,8 @@
 :root {
   --bg: #050714;
   --bg-2: #091129;
-  --panel: rgba(8, 13, 31, 0.82);
-  --panel-2: rgba(15, 21, 41, 0.92);
+  --panel: rgba(8, 13, 31, 0.72);
+  --panel-2: rgba(15, 21, 41, 0.90);
   --border: rgba(138, 103, 255, 0.18);
   --border-strong: rgba(179, 147, 255, 0.32);
   --text: #f3efff;
@@ -12,17 +12,45 @@
   --shadow: 0 20px 60px rgba(0, 0, 0, 0.38);
 }
 
-* { box-sizing: border-box; }
-html { scroll-behavior: smooth; }
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   margin: 0;
   min-height: 100vh;
   color: var(--text);
   font-family: Inter, Arial, sans-serif;
+  background: linear-gradient(180deg, #040612 0%, #02040b 100%);
+  overflow-x: hidden;
+}
+
+.page-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
   background:
-    radial-gradient(circle at top left, rgba(139, 79, 255, 0.18), transparent 20%),
-    radial-gradient(circle at bottom right, rgba(70, 128, 255, 0.16), transparent 20%),
-    linear-gradient(180deg, #040612 0%, #02040b 100%);
+    linear-gradient(rgba(5, 7, 20, 0.30), rgba(5, 7, 20, 0.52)),
+    url("./assets/covers/bg.png") center/cover no-repeat;
+  opacity: 1;
+  pointer-events: none;
+}
+
+.bg-grid {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.04;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.10) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.10) 1px, transparent 1px);
+  background-size: 36px 36px;
+  mask-image: linear-gradient(180deg, rgba(0,0,0,0.72), transparent 95%);
 }
 
 .bg-orb {
@@ -31,15 +59,28 @@ body {
   height: 38rem;
   border-radius: 50%;
   filter: blur(80px);
-  opacity: 0.22;
+  opacity: 0.14;
   pointer-events: none;
   z-index: 0;
 }
-.orb-left { left: -12rem; top: -6rem; background: #7a2fff; }
-.orb-right { right: -10rem; bottom: -10rem; background: #205eff; }
+
+.orb-left {
+  left: -12rem;
+  top: -6rem;
+  background: #7a2fff;
+}
+
+.orb-right {
+  right: -10rem;
+  bottom: -10rem;
+  background: #205eff;
+}
 
 .site-header,
-.shell { position: relative; z-index: 1; }
+.shell {
+  position: relative;
+  z-index: 1;
+}
 
 .site-header {
   display: flex;
@@ -48,7 +89,7 @@ body {
   gap: 1rem;
   padding: 1.25rem 1.5rem;
   border-bottom: 1px solid rgba(255,255,255,0.08);
-  background: rgba(2, 7, 20, 0.72);
+  background: rgba(2, 7, 20, 0.64);
   backdrop-filter: blur(14px);
 }
 
@@ -78,6 +119,7 @@ body {
   font-family: Cinzel, serif;
   font-size: clamp(1.2rem, 2vw, 1.8rem);
   font-weight: 700;
+  text-transform: uppercase;
 }
 
 .brand-subtitle {
@@ -114,8 +156,13 @@ body {
   padding: 2rem 1.25rem 3rem;
 }
 
-.panel { display: none; }
-.panel.active { display: block; }
+.panel {
+  display: none;
+}
+
+.panel.active {
+  display: block;
+}
 
 .grid {
   display: grid;
@@ -127,16 +174,20 @@ body {
 .about-card {
   overflow: hidden;
   border-radius: 1.35rem;
-  border: 1px solid rgba(255,255,255,0.09);
-  background: linear-gradient(180deg, rgba(8, 13, 31, 0.9), rgba(5, 10, 23, 0.98));
+  border: 1px solid rgba(255,255,255,0.10);
+  background: linear-gradient(180deg, rgba(8, 13, 31, 0.70), rgba(5, 10, 23, 0.88));
   box-shadow: var(--shadow);
+  backdrop-filter: blur(10px);
 }
 
 .game-card {
   display: flex;
   flex-direction: column;
   min-height: 340px;
-  transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+  transition:
+    transform 0.25s ease,
+    border-color 0.25s ease,
+    box-shadow 0.25s ease;
 }
 
 .game-card:hover {
@@ -147,29 +198,87 @@ body {
 
 .game-card.featured {
   min-height: 360px;
+  box-shadow: 0 24px 80px rgba(70, 40, 150, 0.18), var(--shadow);
 }
 
 .card-art {
+  position: relative;
   min-height: 180px;
   border-bottom: 1px solid rgba(255,255,255,0.08);
   display: grid;
   place-items: center;
   padding: 1rem;
   text-align: center;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  overflow: hidden;
+  filter: saturate(1.15) contrast(1.08) brightness(1.04);
+  transition: transform 0.3s ease, filter 0.3s ease;
+}
+
+.game-card:hover .card-art {
+  transform: scale(1.015);
+  filter: saturate(1.22) contrast(1.1) brightness(1.06);
+}
+
+.card-art::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(to bottom, rgba(8, 10, 24, 0.02), rgba(8, 10, 24, 0.12)),
+    radial-gradient(circle at 50% 0%, rgba(255,255,255,0.10), transparent 42%);
+}
+
+.card-art::after {
+  content: "";
+  position: absolute;
+  inset: auto 0 0 0;
+  height: 18%;
+  background: linear-gradient(to top, rgba(4, 6, 18, 0.16), transparent);
+}
+
+.game-card.featured .card-art {
+  min-height: 210px;
 }
 
 .art-title {
+  position: relative;
+  z-index: 1;
   font-family: Cinzel, serif;
   font-size: clamp(1.4rem, 2vw, 2rem);
-  text-shadow: 0 0 14px rgba(255,255,255,0.16);
+  color: #f8f4ff;
+  text-shadow:
+    0 2px 10px rgba(0,0,0,0.35),
+    0 0 18px rgba(255,255,255,0.08);
+  letter-spacing: 0.02em;
 }
 
-.art-nova { background: radial-gradient(circle at top, rgba(164, 95, 255, 0.5), transparent 38%), linear-gradient(180deg, #160b29 0%, #060a19 100%); }
-.art-flappy { background: radial-gradient(circle at top, rgba(153, 232, 255, 0.25), transparent 38%), linear-gradient(180deg, #1f2d65 0%, #0a1537 100%); }
-.art-star { background: radial-gradient(circle at top, rgba(255, 124, 216, 0.24), transparent 36%), linear-gradient(180deg, #271036 0%, #080814 100%); }
-.art-brick { background: radial-gradient(circle at top, rgba(255, 196, 88, 0.22), transparent 36%), linear-gradient(180deg, #2a1724 0%, #0a0914 100%); }
-.art-snake { background: radial-gradient(circle at top, rgba(115, 255, 180, 0.18), transparent 36%), linear-gradient(180deg, #112926 0%, #081112 100%); }
-.art-runner { background: radial-gradient(circle at top, rgba(156, 133, 255, 0.25), transparent 36%), linear-gradient(180deg, #181536 0%, #060813 100%); }
+/* Only real images here */
+.art-nova {
+  background-image: url("./assets/covers/nova-blaster.png");
+}
+
+.art-flappy {
+  background-image: url("./assets/covers/flappy-birb.png");
+}
+
+.art-star {
+  background-image: url("./assets/covers/star-blaster.png");
+}
+
+.art-brick {
+  background-image: url("./assets/covers/brick-breaker.png");
+}
+
+.art-snake {
+  background-image: url("./assets/covers/tiny-snake.png");
+}
+
+.art-runner {
+  background-image: url("./assets/covers/dash-runner.png");
+}
 
 .card-body {
   display: flex;
@@ -191,6 +300,7 @@ body {
   border: 1px solid rgba(255,255,255,0.08);
   color: var(--muted);
   font-size: 0.9rem;
+  background: rgba(255,255,255,0.02);
 }
 
 .card-body h2 {
@@ -290,5 +400,9 @@ body {
   .grid,
   .about-grid {
     grid-template-columns: 1fr;
+  }
+
+  .card-art {
+    min-height: 160px;
   }
 }
